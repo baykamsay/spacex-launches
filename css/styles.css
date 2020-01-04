@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(#396afc, #2948ff);
+    font-family: sans-serif;
+    color: white;
+}
+
+header {
+    height: 30vh;
+    justify-content: space-around;
+}
+
+.card {
+    height: 30vh;
+    justify-content: space-around;
+}
+
+footer {
+    
+}
