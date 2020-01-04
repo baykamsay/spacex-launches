@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-    let date;
+    let missionName = document.querySelector('#date');
     const latest = 'https://api.spacexdata.com/v3/launches/latest';
     
     fetch(latest)
@@ -8,5 +8,6 @@ window.addEventListener("load", () => {
     })
     .then(data => {
         console.log(data);
+        missionName.textContent = data.mission_name;
     })
 })
