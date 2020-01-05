@@ -1,19 +1,20 @@
+var interval;
+
 window.addEventListener("load", () => {
-//    let missionName = document.querySelector('#date');
-//    const next = 'https://api.spacexdata.com/v3/launches/next';
-//    const latest = 'https://api.spacexdata.com/v3/launches/latest';
-//    
-//    fetch(latest)
-//    .then(response => {
-//        return response.json();
-//    })
-//    .then(data => {
-//        console.log(data);
-//        missionName.textContent = data.mission_name;
-//    })
-    
     next();
 })
+
+function setLeft(data) {
+    let flightNumber = document.querySelector('#flightNumber');
+    let missionName = document.querySelector('#missionName');
+    let rocketName = document.querySelector('#rocketName');
+    let launchSiteName = document.querySelector('#launchSiteName');
+    
+    flightNumber.textContent = 'Flight ' + data.flight_number;
+    missionName.textContent = data.mission_name;
+    rocketName.textContent = data.rocket.rocket_name;
+    launchSiteName.textContent = data.launch_site.site_name;
+}
 
 function next() {
     let launched = document.querySelector('#launched');
@@ -43,23 +44,24 @@ function next() {
     })
     .then(data => {
         time.innerHTML = times;
-        console.log(data);
+//        console.log(data);
         
+        setLeft(data);
         launched.textContent = 'Will be launched';
         var launch = data.launch_date_unix * 1000;
         
-        // doesnt work
-                    var now = new Date().getTime();
-            var diff = launch - now;
+        // refresh first time
+        var now = new Date().getTime();
+        var diff = launch - now;
 
-            time.querySelector('#day').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-            time.querySelector('#hour').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            time.querySelector('#minute').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            time.querySelector('#second').textContent = Math.floor((diff % (1000 * 60)) / 1000);
-        // delete this
-        setInterval(function update() {
-            var now = new Date().getTime();
-            var diff = launch - now;
+        time.querySelector('#day').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+        time.querySelector('#hour').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        time.querySelector('#minute').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        time.querySelector('#second').textContent = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        interval = setInterval(function update() {
+            now = new Date().getTime();
+            diff = launch - now;
 
             time.querySelector('#day').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
             time.querySelector('#hour').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -70,17 +72,8 @@ function next() {
     })
 }
 
-//function update(launch, time) {
-//    var now = new Date().getTime();
-//    var diff = launch - now;
-//
-//    time.querySelector('#day').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-//    time.querySelector('#hour').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-//    time.querySelector('#minute').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-//    time.querySelector('#second').textContent = Math.floor((diff % (1000 * 60)) / 1000);
-//}
-
 function past() {
+    clearInterval(interval);
     let launched = document.querySelector('#launched');
     let time = document.querySelector('.time');
     
@@ -95,11 +88,17 @@ function past() {
         time.innerHTML = '<p id="launchDate"></p>';
         let launchDate = document.querySelector('#launchDate');
         
-        var dateReadable = new Date(data.launch_date_unix * 1000);
+        var dateReadable = new Date(data.launch_date_unix * 1000).toString();
         
-        console.log(data);
+        var date = dateReadable.substr(4,11);
+        var times = dateReadable.substr(16,8);
+        var gmt = dateReadable.substr(34, 11);
+        var result = date + ', ' + times + ' ' + gmt;
+        
+//        console.log(data);
+        
+        setLeft(data);
         launched.textContent = 'Launched';
-        
-        launchDate.textContent = dateReadable;
+        launchDate.textContent = result;
     })
 }
