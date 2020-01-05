@@ -13,9 +13,43 @@
         <h1>SpaceX Launches</h1>
     </header>
     
-    <div class="card">
-        <h2 id="date">Date and Time</h2>
+    <div class="center">
+        <div class="buttons">
+            <input type="button" value="Next" onclick="next()">
+            <input type="button" value="Past" onclick="past()">
+        </div>
+        <div class="card">
+            <div class="info">
+                <h3 id="flightNumber">Flight Number</h3>
+                <h4 id="missionName">Misson Name</h4>
+                <p id="rocketName">Rocket Name</p>
+                <p id="launchSiteName">Launch Site Name</p>
+            </div>
+            <div class="launch">
+                <p id="launched">Launched?</p>
+                <div class="time">
+                    <div class="days">
+                        <p class="num" id="day">-</p>
+                        <p>Days</p>
+                    </div>
+                    <div class="hours">
+                        <p class="num" id="hour">-</p>
+                        <p>Hours</p>
+                    </div>
+                    <div class="minutes">
+                        <p class="num" id="minute">-</p>
+                        <p>Minutes</p>
+                    </div>
+                    <div class="seconds">
+                        <p class="num" id="second">-</p>
+                        <p>Seconds</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
     
     <footer>
         <p>Developed by Baykam Say</p>
